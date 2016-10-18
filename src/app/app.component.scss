@@ -1,13 +1,23 @@
+@import '../style/variables';
+
 // styles applied on :host are applied on the current component, "app" in this case
 :host {
   display: block;
+
 }
 
+md-sidenav-layout {
+  .md-sidenav-backdrop {
+    &.md-sidenav-shown {
+      background-color: rgba(0, 0, 0, 0.75);
+    }
+  }
 
-md-sidenav {
-  width: 600px;
+  md-sidenav {
+    width: 30%;
+    background-color: $white;
+  }
 }
-
 
 header {
   background-color: #fff;
