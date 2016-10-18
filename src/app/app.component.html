@@ -1,17 +1,26 @@
-<header>
-  <nav>
-    <a [routerLink]="['']">Home</a>
-    <a [routerLink]="['about']">About</a>
-  </nav>
-</header>
-<main>
-  <h1>Hello from {{api.title}}!</h1>
+<md-sidenav-layout>
+  <md-sidenav #start (open)="mybutton.focus()" mode="side">
+    Start Sidenav.
+    <br>
+    <button md-button #mybutton (click)="start.close()">Close</button>
+  </md-sidenav>
+  <header>
+    <nav>
+      <a [routerLink]="['']">Home</a>
+      <a [routerLink]="['about']">About</a>
+    </nav>
+  </header>
+  <main>
+    <button (click)="start.open()">open</button>
+    <h1>Hello from {{api.title}}!</h1>
 
-  <!-- Images (and assets) are parsed and loaded from within the public directory -->
-  <img src="/img/angular.png">
+    <!-- Images (and assets) are parsed and loaded from within the public directory -->
+    <img src="/img/angular.png">
 
-  <router-outlet></router-outlet>
-</main>
-<footer>
-  <a [href]="url">Webpack Angular 2 Starter</a>
-</footer>
+    <router-outlet></router-outlet>
+  </main>
+  <footer>
+    <a [href]="url">Webpack Angular 2 Starter</a>
+  </footer>
+
+</md-sidenav-layout>

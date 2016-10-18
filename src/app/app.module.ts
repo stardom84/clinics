@@ -17,7 +17,7 @@ import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
     BrowserModule,
     HttpModule,
     FormsModule,
-    MaterialModule,
+    MaterialModule.forRoot(),
     routing
   ],
   declarations: [
