@@ -4,8 +4,7 @@ import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {MaterialModule} from '@angular/material';
 import {AppComponent} from './app.component';
-import {HomeComponent} from './pages/home/home.component';
-import {AboutComponent} from './pages/about/about.component';
+import {AboutComponent, HomeComponent, HomeSearchComponent} from './pages';
 import {ClinicCardComponent} from './components/clinic-card/clinic-card.component';
 import {ApiService, InMemoryDataService} from './shared';
 import {routing} from './app.routing';
@@ -24,8 +23,9 @@ import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
   ],
   declarations: [
     AppComponent,
-    HomeComponent,
     AboutComponent,
+    HomeComponent,
+    HomeSearchComponent,
     ClinicCardComponent
   ],
   providers: [ApiService],
