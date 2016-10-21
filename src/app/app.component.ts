@@ -1,5 +1,5 @@
-import { Component, ViewEncapsulation } from '@angular/core';
-import { ApiService } from './shared';
+import {Component, ViewEncapsulation} from '@angular/core';
+import {ApiService} from './shared';
 import '../style/app.scss';
 
 @Component({
