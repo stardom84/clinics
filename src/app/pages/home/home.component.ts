@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ApiService} from '../../shared/api.service';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'my-home',
@@ -8,14 +9,14 @@ import {ApiService} from '../../shared/api.service';
 })
 export class HomeComponent implements OnInit {
 
-  private clinics: model.IClinic[];
+  private clinics: Observable<model.IClinic[]>;
 
   constructor(private api: ApiService) {
     // Do stuff
   }
 
   async ngOnInit() {
-    this.clinics = await this.api.get.clinics();
+    this.clinics = this.api.get.clinics();
     console.log('Hello Home');
   }
 

@@ -1,1 +1,7 @@
-<my-clinic-card *ngFor="let clinic of clinics; trackBy:trackByClinicId" [clinic]="clinic"></my-clinic-card>
+<div id="home-search">
+  <label>
+    <input type="text">
+  </label>
+</div>
+
+<my-clinic-card *ngFor="let clinic of clinics | async; trackBy:trackByClinicId" [clinic]="clinic"></my-clinic-card>

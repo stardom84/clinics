@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
-import {Http} from '@angular/http';
+import {Http, Response} from '@angular/http';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class ApiService {
@@ -11,10 +12,9 @@ export class ApiService {
   private heroesUrl = 'app/clinics';  // URL to web api
 
   get = {
-    clinics: (): Promise<model.IClinicDTO[]> => {
+    clinics: (): Observable<model.IClinicDTO[]> => {
       return this.http.get(this.heroesUrl)
-                 .toPromise()
-                 .then(response => response.json().data as model.IClinicDTO[])
+                 .map(this.extractData)
                  .catch(this.handleError);
     }
   };
@@ -28,5 +28,10 @@ export class ApiService {
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
+  }
+
+  private extractData(res: Response) {
+    let body = res.json();
+    return body.data || {};
   }
 }
