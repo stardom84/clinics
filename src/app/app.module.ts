@@ -1,15 +1,15 @@
-import {NgModule, ApplicationRef} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
-import {HttpModule} from '@angular/http';
-import {FormsModule} from '@angular/forms';
-import {MaterialModule} from '@angular/material';
-import {AppComponent} from './app.component';
-import {AboutComponent, HomeComponent, HomeSearchComponent} from './pages';
-import {ClinicCardComponent} from './components/clinic-card/clinic-card.component';
-import {ApiService, InMemoryDataService} from './shared';
-import {routing} from './app.routing';
-import {removeNgStyles, createNewHosts} from '@angularclass/hmr';
-import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
+import { NgModule, ApplicationRef } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from '@angular/material';
+import { AppComponent } from './app.component';
+import { AboutComponent, HomeComponent, HomeSearchComponent } from './pages';
+import { ClinicCardComponent, HeaderComponent } from './components';
+import { ApiService, InMemoryDataService } from './shared';
+import { routing } from './app.routing';
+import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
+import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
 
 
 @NgModule({
@@ -26,13 +26,17 @@ import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
     AboutComponent,
     HomeComponent,
     HomeSearchComponent,
-    ClinicCardComponent
+    ClinicCardComponent,
+    HeaderComponent
   ],
-  providers: [ApiService],
+  providers: [
+    ApiService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  constructor(public appRef: ApplicationRef) {}
+  constructor(public appRef: ApplicationRef) {
+  }
 
   hmrOnInit(store) {
     console.log('HMR store', store);

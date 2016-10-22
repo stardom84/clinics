@@ -1,22 +1,15 @@
 <md-sidenav-layout>
-  <md-sidenav #start (open)="mybutton.focus()" mode="over">
+  <md-sidenav #sidenav (open)="mybutton.focus()" mode="over">
     Start Sidenav.
     <br>
-    <button md-button #mybutton (click)="start.close()">Close</button>
+    <button md-button #mybutton (click)="sidenav.close()">Close</button>
   </md-sidenav>
-  <header>
-    <nav>
-      <i class="material-icons" (click)="start.open()">menu</i>
-      <a [routerLink]="['']">Home</a>
-      <a [routerLink]="['about']">About</a>
-    </nav>
-  </header>
-  <main>
-    <!-- Images (and assets) are parsed and loaded from within the public directory -->
-    <!--<img src="/img/angular.png">-->
-    <!---->
-    <router-outlet></router-outlet>
-  </main>
+  <div id="main-wrapper">
+    <my-header [sidenav]="sidenav"></my-header>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </div>
   <footer>
     <!--<a [href]="url">Webpack Angular 2 Starter</a>-->
   </footer>

@@ -1,12 +1,10 @@
 @import '../style/variables';
 
 // styles applied on :host are applied on the current component, "app" in this case
-:host {
-  display: block;
-
-}
 
 md-sidenav-layout {
+  height: 100%;
+  overflow: hidden;
   .md-sidenav-backdrop {
     &.md-sidenav-shown {
       background-color: rgba(0, 0, 0, 0.75);
@@ -14,27 +12,35 @@ md-sidenav-layout {
   }
 
   md-sidenav {
-    width: 30%;
+    width: 50%;
     background-color: $white;
   }
 }
 
-header {
-  background-color: #fff;
-  padding: 16px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
-}
+#main-wrapper {
+  height: 100%;
+  overflow: hidden;
 
-main {
-  padding: 1em;
-  font-family: Arial, Helvetica, sans-serif;
-  text-align: center;
-  margin-top: 50px;
-  display: block;
+  my-header {
+    height: 9%;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    padding: 0 $content-space;
+    top: 0;
+    left: 0;
+    box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+  }
+
+  main {
+    height: 91%;
+    padding: 0 $content-space;
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    display: block;
+    overflow: scroll;
+  }
 }
 
 footer {
