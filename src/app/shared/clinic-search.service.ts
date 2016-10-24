@@ -7,9 +7,9 @@ export class ClinicSearchService {
   constructor(private http: Http) {
   }
 
-  search(term: string): Observable<model.IClinic[]> {
+  search(term: string): Observable<model.IDealDTO[]> {
     return this.http
-      .get(`app/clinics/?name=${term}`)
-      .map((r: Response) => r.json().data as model.IClinic[]);
+      .get(`app/deals/?name=${term}`)
+      .map((r: Response) => r.json().data as model.IDealDTO[]);
   }
 }

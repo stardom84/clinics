@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/Observable';
 export class HomeComponent implements OnInit {
 
   private clinics: Observable<model.IClinic[]>;
+  private deals: Observable<model.IDeal[]>;
 
   constructor(private api: ApiService) {
     // Do stuff
@@ -17,15 +18,15 @@ export class HomeComponent implements OnInit {
 
   ngOnInit() {
     this.clinics = this.api.get.clinics();
-    console.log('Hello Home');
+    this.deals = this.api.get.deals();
   }
 
-  trackByClinicId(idx: number, clinic: model.IClinic) {
-    return clinic.id;
+  trackById(idx: number, item: any) {
+    return item.id;
   }
 
-  onSearchClinic(clinics: Observable<model.IClinic[]>) {
-    this.clinics = clinics;
+  onSearchDeal(deals: Observable<model.IDeal[]>) {
+    this.deals = deals;
   }
 
 }

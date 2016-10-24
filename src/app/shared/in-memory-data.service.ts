@@ -1,15 +1,56 @@
-import {InMemoryDbService} from 'angular-in-memory-web-api';
+import '../model';
+import { InMemoryDbService } from 'angular-in-memory-web-api';
 
 export class InMemoryDataService implements InMemoryDbService {
-  title = 'Clinics';
 
   createDb() {
-    let clinics = [
-      {id: '1', name: 'Windstorm'},
-      {id: '2', name: 'Bombasto'},
-      {id: '3', name: 'Magneta'},
-      {id: '4', name: 'Tornado'}
+    let clinics: model.IClinicDTO[] = <model.IClinicDTO[]>[
+      {id: '1', name: 'Clinic A', code: 'C1', location: 'Location A'},
+      {id: '2', name: 'Clinic B', code: 'C2', location: 'Location B'},
+      {id: '3', name: 'Clinic C', code: 'C3', location: 'Location C'},
+      {id: '4', name: 'Clinic D', code: 'C4', location: 'Location D'},
+      {id: '5', name: 'Clinic E', code: 'C5', location: 'Location E'},
+      {id: '6', name: 'Clinic F', code: 'C6', location: 'Location F'},
+      {id: '7', name: 'Clinic G', code: 'C7', location: 'Location G'},
+      {id: '8', name: 'Clinic H', code: 'C8', location: 'Location H'},
+      {id: '8', name: 'Clinic I', code: 'C9', location: 'Location I'},
+      {id: '8', name: 'Clinic J', code: 'C10', location: 'Location J'}
     ];
-    return {clinics};
+
+    let deals: model.IDealDTO[] = <model.IDealDTO[]>[
+      {
+        id: '1',
+        code: 'Deal_1',
+        clinicId: 'Clinic A',
+        title: 'This is an awesome promotion!',
+        price: 5000,
+        promoImgId: 'Deal_1_promo_img'
+      },
+      {
+        id: '2',
+        code: 'Deal_2',
+        clinicId: 'Clinic B',
+        title: 'Don\'t miss this chance!',
+        price: 10000,
+        promoImgId: 'Deal_2_promo_img'
+      },
+      {
+        id: '3',
+        code: 'Deal_3',
+        clinicId: 'Clinic C',
+        title: 'it\'s unbelievable!!',
+        price: 3000,
+        promoImgId: 'Deal_3_promo_img'
+      },
+      {
+        id: '4',
+        code: 'Deal_4',
+        clinicId: 'Clinic D',
+        title: 'For 3 days only!',
+        price: 8000,
+        promoImgId: 'Deal_4_promo_img'
+      }
+    ];
+    return {clinics, deals};
   }
 }

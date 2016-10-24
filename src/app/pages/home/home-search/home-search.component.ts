@@ -13,7 +13,7 @@ import { EventEmitter } from '@angular/common/src/facade/async';
 })
 
 export class HomeSearchComponent implements OnInit {
-  @Output() searchClinic: EventEmitter<Observable<model.IClinic[]>> = new EventEmitter<Observable<model.IClinic[]>>();
+  @Output() searchDeal: EventEmitter<Observable<model.IDeal[]>> = new EventEmitter<Observable<model.IDeal[]>>();
   private clinics: Observable<model.IClinic[]>;
   private searchTerms = new Subject<string>();
 
@@ -39,6 +39,6 @@ export class HomeSearchComponent implements OnInit {
 
   search(term: string): void {
     this.searchTerms.next(term);
-    this.searchClinic.emit(this.clinics);
+    this.searchDeal.emit(this.clinics);
   }
 }

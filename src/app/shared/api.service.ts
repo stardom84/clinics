@@ -7,21 +7,24 @@ import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class ApiService {
-  title = '';
-
-  private heroesUrl = 'app/clinics';  // URL to web api
+  private baseUrl = 'app/';
+  private clinicsUrl = `${this.baseUrl}/clinics`;  // URL to web api
+  private dealsUrl = `${this.baseUrl}/deals`;  // URL to web api
 
   get = {
     clinics: (): Observable<model.IClinicDTO[]> => {
-      return this.http.get(this.heroesUrl)
-                 .map(this.extractData)
-                 .catch(this.handleError);
+      return this.http.get(this.clinicsUrl)
+        .map(this.extractData)
+        .catch(this.handleError);
+    },
+    deals: (): Observable<model.IDealDTO[]> => {
+      return this.http.get(this.dealsUrl)
+        .map(this.extractData)
+        .catch(this.handleError);
     }
   };
 
-  constructor(
-    private http: Http
-  ) {
+  constructor(private http: Http) {
 
   }
 
