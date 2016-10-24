@@ -1,2 +1,3 @@
-<my-home-search></my-home-search>
+<my-home-search (searchClinic)="onSearchClinic($event)"></my-home-search>
 <my-clinic-card *ngFor="let clinic of clinics | async; trackBy:trackByClinicId" [clinic]="clinic"></my-clinic-card>
+

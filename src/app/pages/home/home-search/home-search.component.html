@@ -1,6 +1,6 @@
 <div id="home-search">
   <label>
-    <md-input align="star" class="search-input">
+    <md-input align="star" class="search-input" #searchBox id="search-box" (keyup)="search(searchBox.value)">
       <md-placeholder align="end">
         <i class="material-icons">search</i>
       </md-placeholder>

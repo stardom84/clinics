@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {ApiService} from '../../shared/api.service';
-import {Observable} from 'rxjs';
+import { Component, OnInit } from '@angular/core';
+import { ApiService } from '../../shared/api.service';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'my-home',
@@ -15,13 +15,17 @@ export class HomeComponent implements OnInit {
     // Do stuff
   }
 
-  async ngOnInit() {
+  ngOnInit() {
     this.clinics = this.api.get.clinics();
     console.log('Hello Home');
   }
 
-  private trackByClinicId(idx: number, clinic: model.IClinic) {
+  trackByClinicId(idx: number, clinic: model.IClinic) {
     return clinic.id;
+  }
+
+  onSearchClinic(clinics: Observable<model.IClinic[]>) {
+    this.clinics = clinics;
   }
 
 }
