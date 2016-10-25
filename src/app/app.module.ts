@@ -1,16 +1,16 @@
-import './models/index';
-import { NgModule, ApplicationRef } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpModule } from '@angular/http';
-import { FormsModule } from '@angular/forms';
-import { MaterialModule } from '@angular/material';
-import { AppComponent } from './app.component';
-import { AboutComponent, HomeComponent, HomeSearchComponent } from './pages';
-import { ClinicCardComponent, HeaderComponent } from './components';
-import { ApiService, InMemoryDataService } from './shared';
-import { routing } from './app.routing';
-import { removeNgStyles, createNewHosts } from '@angularclass/hmr';
-import { InMemoryWebApiModule } from 'angular-in-memory-web-api';
+import './model';
+import {NgModule, ApplicationRef} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpModule} from '@angular/http';
+import {FormsModule} from '@angular/forms';
+import {MaterialModule} from '@angular/material';
+import {AppComponent} from './app.component';
+import {AboutComponent, HomeComponent, HomeSearchComponent} from './pages';
+import {ClinicCardComponent, HeaderComponent} from './components';
+import {ApiService, InMemoryDataService} from './shared';
+import {routing} from './app.routing';
+import {removeNgStyles, createNewHosts} from '@angularclass/hmr';
+import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
 
 
 @NgModule({

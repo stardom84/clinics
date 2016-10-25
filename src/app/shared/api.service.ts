@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+import {Injectable} from '@angular/core';
+import {Http, Response} from '@angular/http';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
-import { Observable } from 'rxjs/Observable';
+import {Observable} from 'rxjs/Observable';
 
 @Injectable()
 export class ApiService {
-  private baseUrl = 'app/';
+  private baseUrl = 'app';
   private clinicsUrl = `${this.baseUrl}/clinics`;  // URL to web api
   private dealsUrl = `${this.baseUrl}/deals`;  // URL to web api
 
@@ -24,9 +24,7 @@ export class ApiService {
     }
   };
 
-  constructor(private http: Http) {
-
-  }
+  constructor(private http: Http) {}
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
