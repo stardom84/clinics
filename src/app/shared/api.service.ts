@@ -6,12 +6,13 @@ import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
 import * as firebase from 'firebase';
 
+let firebaseConfig = {
+  authDomain: 'popping-fire-4017.firebaseapp.com',
+  databaseURL: 'https:///popping-fire-4017.firebaseio.com'
+};
+
 @Injectable()
 export class ApiService {
-  private firebaseConfig = {
-    authDomain: 'popping-fire-4017.firebaseapp.com',
-    databaseURL: 'https:///popping-fire-4017.firebaseio.com'
-  };
 
   private baseUrl = 'app';
   private clinicsUrl = `${this.baseUrl}/clinics`;  // URL to web api
@@ -33,7 +34,13 @@ export class ApiService {
   };
 
   constructor(private http: Http) {
-    firebase.initializeApp(this.firebaseConfig);
+    firebase.initializeApp({
+      apiKey: 'AIzaSyBDpjSEmfLFfflvrt2EUlnVflfxUPCjHEs',
+      authDomain: 'popping-fire-4017.firebaseapp.com',
+      databaseURL: 'https://popping-fire-4017.firebaseio.com',
+      storageBucket: 'popping-fire-4017.appspot.com',
+      messagingSenderId: '873328552635'
+    });
     this.database = firebase.database();
   }
 
