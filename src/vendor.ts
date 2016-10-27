@@ -19,6 +19,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/Observable';
 import 'rxjs/Subject';
+import 'firebase';
 import 'hammerjs';
 import '@angularclass/hmr';
 

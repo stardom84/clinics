@@ -4,9 +4,7 @@ import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import {Observable} from 'rxjs/Observable';
-
-let firebase = require('firebase/app');
-require('firebase/database');
+import * as firebase from 'firebase';
 
 @Injectable()
 export class ApiService {
