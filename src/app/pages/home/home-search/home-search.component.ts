@@ -1,9 +1,9 @@
-import {Component, OnInit, Output} from '@angular/core';
-import {ClinicSearchService} from '../../../shared/clinic-search.service';
-import {Subject} from 'rxjs/Subject';
-import {Observable} from 'rxjs/Observable';
-import {Router} from '@angular/router';
-import {EventEmitter} from '@angular/common/src/facade/async';
+import { Component, OnInit, Output } from '@angular/core';
+import { ClinicSearchService } from '../../../shared/clinic-search.service';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
+import { EventEmitter } from '@angular/common/src/facade/async';
 
 @Component({
   selector: 'my-home-search',
