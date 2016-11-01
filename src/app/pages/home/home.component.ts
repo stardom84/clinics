@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../shared/api.service';
-import { Observable } from 'rxjs/Observable';
+import {Component, OnInit} from '@angular/core';
+import {ApiService} from '../../shared/_index';
+import {Observable} from 'rxjs/Observable';
 
 @Component({
   selector: 'my-home',
@@ -17,8 +17,8 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.clinics = this.api.get.clinics();
-    this.deals = this.api.get.deals();
+    this.clinics = this.api.get().clinics();
+    this.deals = this.api.get().deals();
   }
 
   trackById(idx: number, item: any) {

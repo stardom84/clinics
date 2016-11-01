@@ -1,16 +1,15 @@
-import './model';
+import './model/_index';
 import {NgModule, ApplicationRef} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {HttpModule} from '@angular/http';
 import {FormsModule} from '@angular/forms';
 import {MaterialModule} from '@angular/material';
 import {AppComponent} from './app.component';
-import {AboutComponent, HomeComponent, HomeSearchComponent} from './pages';
-import {ClinicCardComponent, HeaderComponent} from './components';
-import {ApiService, InMemoryDataService} from './shared';
 import {routing} from './app.routing';
+import {AboutComponent, HomeComponent, HomeSearchComponent} from './pages/_index';
+import {ClinicCardComponent, HeaderComponent} from './components/_index';
+import {ApiService, ObservableService} from './shared/_index';
 import {removeNgStyles, createNewHosts} from '@angularclass/hmr';
-import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
 
 
 @NgModule({
@@ -19,8 +18,7 @@ import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
     BrowserModule,
     HttpModule,
     FormsModule,
-    routing,
-    InMemoryWebApiModule.forRoot(InMemoryDataService, {delay: 0})
+    routing
   ],
   declarations: [
     AppComponent,
@@ -31,7 +29,8 @@ import {InMemoryWebApiModule} from 'angular-in-memory-web-api';
     HeaderComponent
   ],
   providers: [
-    ApiService
+    ApiService,
+    ObservableService
   ],
   bootstrap: [AppComponent]
 })

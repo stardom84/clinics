@@ -1,15 +1,21 @@
 import {Injectable} from '@angular/core';
-import {Http, Response} from '@angular/http';
 import {Observable} from 'rxjs/Observable';
+import {ObservableService, ApiService} from './_index';
 
 @Injectable()
 export class ClinicSearchService {
-  constructor(private http: Http) {
+  private obClinics: Observable<model.IDeal>;
+
+  constructor(
+    private Observable: ObservableService,
+    private Api: ApiService
+  ) {
+    this.obClinics = this.Observable.get('clinics');
   }
 
-  search(term: string): Observable<model.IDealDTO[]> {
-    return this.http
-               .get(`app/deals/?title=${term}`)
-      .map((r: Response) => r.json().data as model.IDealDTO[]);
+  search(term: string): Observable < model.IDeal[] > {
+    return this.obClinics
+               .map((snapshot: any) =>
+                 this.Api.extractSnapshot(snapshot) as model.IDeal[]);
   }
 }

@@ -1,80 +1,69 @@
-import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
-import { Observable } from 'rxjs/Observable';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import * as firebase from 'firebase';
+import {ObservableService} from './observable.service';
 
 let firebaseConfig = {
-  apiKey: 'AIzaSyBDpjSEmfLFfflvrt2EUlnVflfxUPCjHEs',
-  authDomain: 'popping-fire-4017.firebaseapp.com',
-  databaseURL: 'https://popping-fire-4017.firebaseio.com',
-  storageBucket: 'popping-fire-4017.appspot.com',
-  messagingSenderId: '873328552635'
+  apiKey: 'AIzaSyBb5BAKWzefQHM65bn-2iUohqJvyXC347s',
+  authDomain: 'clinics-45581.firebaseapp.com',
+  databaseURL: 'https://clinics-45581.firebaseio.com',
+  storageBucket: 'clinics-45581.appspot.com',
+  messagingSenderId: '252734030713'
 };
 
 @Injectable()
 export class ApiService {
 
-  private baseUrl = 'app';
-  private clinicsUrl = `${this.baseUrl}/clinics`;  // URL to web api
-  private dealsUrl = `${this.baseUrl}/deals`;  // URL to web api
-
   public database: firebase.database.Database;
 
-  private observables: {[name: string]: Observable<any>}[] = [];
-
-  get = {
-    clinics: (): Observable<model.IClinicDTO[]> => {
-      return this.http.get(this.clinicsUrl)
-                 .map(this.extractData)
-                 .catch(this.handleError);
-    },
-    deals: (): Observable<model.IDealDTO[]> => {
-      return this.http.get(this.dealsUrl)
-                 .map(this.extractData)
-                 .catch(this.handleError);
-    }
-  };
-
-  constructor(private http: Http) {
+  constructor(
+    private observable: ObservableService
+  ) {
     this.init();
+  }
+
+  get() {
+    return {
+      clinics: (): Observable<model.IClinicDTO[]> => {
+        return this.observable
+                   .get('clinics')
+                   .map(this.extractSnapshot)
+                   .catch(this.handleError);
+      },
+      deals: (): Observable<model.IDealDTO[]> => {
+        return this.observable
+                   .get('deals')
+                   .map(this.extractSnapshot)
+                   .catch(this.handleError);
+      }
+    };
+  }
+
+  extractSnapshot(snapshot: firebase.database.DataSnapshot): any {
+    return snapshot.val();
   }
 
   private init(): void {
     this.initDb();
-    this.setObservables([
-      {name: 'snapshot', observable: Observable.fromEvent(this.database.ref('streetModels'), 'value')}
-    ]);
-    this.subscribeObservables();
-
+    this.setObservables();
   }
 
   private initDb(): void {
     this.database = firebase.initializeApp(firebaseConfig).database();
   }
 
-  private setObservables(obArr: {name: string, observable: Observable<any>}[]): void {
-    obArr.forEach(ob => {
-      this.observables[ob.name] = ob.observable;
-    });
-
-  }
-
-  private subscribeObservables() {
-    this.observables['snapshot'].map(snapshot => snapshot.val())
-                                .subscribe(snapshotVal => console.log(snapshotVal));
+  private setObservables(): void {
+    this.observable
+        .set({name: 'clinics', observable: Observable.fromEvent(this.database.ref('clinics'), 'value')})
+        .set({name: 'deals', observable: Observable.fromEvent(this.database.ref('deals'), 'value')});
   }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
     return Promise.reject(error.message || error);
-  }
-
-  private extractData(res: Response) {
-    let body = res.json();
-    return body.data || {};
   }
 }
