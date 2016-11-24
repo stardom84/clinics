@@ -1,9 +1,9 @@
-import { Component, OnInit, Output } from '@angular/core';
-import { ClinicSearchService } from '../../../shared/clinic-search.service';
-import { Subject } from 'rxjs/Subject';
-import { Observable } from 'rxjs/Observable';
-import { Router } from '@angular/router';
-import { EventEmitter } from '@angular/common/src/facade/async';
+import {Component, OnInit, Output} from '@angular/core';
+import {ClinicSearchService} from '../../../shared/clinic-search.service';
+import {Subject} from 'rxjs/Subject';
+import {Observable} from 'rxjs/Observable';
+import {Router} from '@angular/router';
+import {EventEmitter} from '@angular/common/src/facade/async';
 
 @Component({
   selector: 'my-home-search',
@@ -27,11 +27,14 @@ export class HomeSearchComponent implements OnInit {
     this.deals = this.searchTerms
                      .debounceTime(0)        // wait for 300ms pause in events
                      .distinctUntilChanged()   // ignore if next search term is same as previous
-                     .switchMap(term => term   // switch to new observable each time
-                       // return the http search observable
-                       ? this.clinicSearchService.search(term)
-                       // or the observable of empty heroes if no search term
-                       : Observable.of<model.IDeal[]>([]))
+                     .switchMap(term => {
+                       console.log('switchMap', term);
+                       return term   // switch to new observable each time
+                         // return the http search observable
+                         ? this.clinicSearchService.search(term)
+                         // or the observable of empty heroes if no search term
+                         : Observable.of<model.IDeal[]>([])
+                     })
                      .catch(error => {
                        // TODO: real error handling
                        console.log(error);

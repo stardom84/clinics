@@ -5,20 +5,26 @@ import 'rxjs/add/observable/fromEvent';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import * as firebase from 'firebase';
+import {AWS} from 'aws-sdk';
 import {ObservableService} from './observable.service';
 
-let firebaseConfig = {
+/*let firebaseConfig = {
   apiKey: 'AIzaSyBb5BAKWzefQHM65bn-2iUohqJvyXC347s',
   authDomain: 'clinics-45581.firebaseapp.com',
   databaseURL: 'https://clinics-45581.firebaseio.com',
   storageBucket: 'clinics-45581.appspot.com',
   messagingSenderId: '252734030713'
+ };*/
+
+let dynamoDBConf = {
+  region: 'ap-southeast-1a',
+  endpoint: 'http://localhost:8080'
 };
 
 @Injectable()
 export class ApiService {
 
-  public database: firebase.database.Database;
+  public database: AWS.DynamoDB.DocumentClient;
 
   constructor(
     private observable: ObservableService
@@ -44,7 +50,13 @@ export class ApiService {
   }
 
   extractSnapshot(snapshot: firebase.database.DataSnapshot): any {
-    return snapshot.val();
+    let result: firebase.database.DataSnapshot[] = [];
+
+    snapshot.forEach(function (child) {
+      result.push(child.val());
+    });
+
+    return result;
   }
 
   private init(): void {
@@ -53,7 +65,8 @@ export class ApiService {
   }
 
   private initDb(): void {
-    this.database = firebase.initializeApp(firebaseConfig).database();
+    AWS.config.update(dynamoDBConf);
+    this.database = new AWS.DynamoDB.DocumentClient();
   }
 
   private setObservables(): void {

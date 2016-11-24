@@ -53,3 +53,4 @@ __build__/**
 # IDE #
 .idea/
 *.swp
+/node_modules/forever-agent/
