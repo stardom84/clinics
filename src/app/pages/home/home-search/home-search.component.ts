@@ -13,8 +13,8 @@ import {EventEmitter} from '@angular/common/src/facade/async';
 })
 
 export class HomeSearchComponent implements OnInit {
-  @Output() searchDeal: EventEmitter<Observable<model.IDeal[]>> = new EventEmitter<Observable<model.IDeal[]>>();
-  private deals: Observable<model.IDeal[]>;
+  @Output() searchDeal: EventEmitter<Observable<model.IClinic[]>> = new EventEmitter<Observable<model.IClinic[]>>();
+  private deals: Observable<model.IClinic[]>;
   private searchTerms = new Subject<string>();
 
   constructor(
@@ -25,7 +25,7 @@ export class HomeSearchComponent implements OnInit {
 
   ngOnInit(): void {
     this.deals = this.searchTerms
-                     .debounceTime(0)        // wait for 300ms pause in events
+                     .debounceTime(300)        // wait for 300ms pause in events
                      .distinctUntilChanged()   // ignore if next search term is same as previous
                      .switchMap(term => {
                        console.log('switchMap', term);
@@ -33,12 +33,12 @@ export class HomeSearchComponent implements OnInit {
                          // return the http search observable
                          ? this.clinicSearchService.search(term)
                          // or the observable of empty heroes if no search term
-                         : Observable.of<model.IDeal[]>([])
+                         : Observable.of<model.IClinic[]>([]);
                      })
                      .catch(error => {
                        // TODO: real error handling
                        console.log(error);
-                       return Observable.of<model.IDeal[]>([]);
+                       return Observable.of<model.IClinic[]>([]);
                      });
   }
 

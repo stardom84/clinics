@@ -16,10 +16,7 @@ export class HomeComponent implements OnInit {
     // Do stuff
   }
 
-  ngOnInit() {
-    this.clinics = this.api.get().clinics();
-    this.deals = this.api.get().deals();
-  }
+  ngOnInit() {}
 
   trackById(idx: number, item: any) {
     return item.id;

@@ -1,6 +1,9 @@
 declare namespace model {
-  interface IClinic extends IClinicDTO {
-    favorite: boolean;
+  interface IClinic extends BaseModel {
+    id: string;
+    code: string;
+    name: string;
+    location: string;
   }
 }
 
