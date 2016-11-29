@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
-import 'rxjs/add/observable/bindCallback';
 import {ApiService} from './_index';
 import {AWSError} from 'aws-sdk/lib/error';
 import {ScanInput, ScanOutput} from 'aws-sdk/lib/dynamodb/document_client_interfaces';
@@ -9,45 +8,40 @@ import {ScanInput, ScanOutput} from 'aws-sdk/lib/dynamodb/document_client_interf
 @Injectable()
 export class ClinicSearchService {
 
-  private searchOb: (params: ScanInput) => Observable<AWSError, ScanOutput>;
+  private searchOb: any;
 
   constructor(
     private Api: ApiService
   ) {
-    this.searchOb = Observable.bindCallback(this.Api.database.scan);
+    this.searchOb = Observable.bindCallback((param: ScanInput, cb: (err: AWSError, data: ScanOutput) => void) => {
+      this.Api.database.scan(param, cb);
+    });
   }
 
-  search(term: string) {
-    // this.Api.database.scan(this.createParam(term), this.onSearch);
-
+  search(term: string | number) {
+    console.log('term', term);
     return this.searchOb(this.createParam(term))
-               .map(this.onSearch);
+               .map((res: [AWSError, ScanOutput]) => this.onSearch(res));
   }
 
-  private onInit() {
-    this.searchOb = Observable.bindCallback(this.Api.database.scan);
+  private onSearch(res: [AWSError, ScanOutput]) {
+    return this.Api.parseAWSOutput(res) as model.IClinic[];
   }
 
-  private onSearch(err: AWSError, data: ScanOutput) {
-    if (err) {
-      console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
-    } else {
-      console.log('GetItem succeeded:', data);
+  private createParam(term: string | number): ScanInput {
+    let param = {} as ScanInput;
 
-      return this.Api.extractAWSOutput(data) as model.IClinic[];
-    }
-  }
+    param.TableName = 'clinic';
 
-  private createParam(term: string): Object {
-    return {
-      TableName: 'clinic',
-      FilterExpression: 'contains(#name, :term)',
-      ExpressionAttributeNames: {
+    if (term) {
+      param.FilterExpression = 'contains(#name, :term)';
+      param.ExpressionAttributeNames = {
         '#name': 'name'
-      },
-      ExpressionAttributeValues: {
+      };
+      param.ExpressionAttributeValues = {
         ':term': term
-      }
-    };
+      };
+    }
+    return param;
   };
 }

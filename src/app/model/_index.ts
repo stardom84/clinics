@@ -1,6 +1,6 @@
 import './IDTO';
 import './IClinic';
 import './IDealDTO';
-import './IDeal';
 import './BaseModel';
+import './ISpecialty';
 import './_index';

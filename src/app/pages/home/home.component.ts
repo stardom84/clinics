@@ -10,7 +10,6 @@ import {Observable} from 'rxjs/Observable';
 export class HomeComponent implements OnInit {
 
   private clinics: Observable<model.IClinic[]>;
-  private deals: Observable<model.IDeal[]>;
 
   constructor(private api: ApiService) {
     // Do stuff
@@ -22,8 +21,8 @@ export class HomeComponent implements OnInit {
     return item.id;
   }
 
-  onSearchDeal(deals: Observable<model.IDeal[]>) {
-    this.deals = deals;
+  onSearchClinic(clinics: Observable<model.IClinic[]>) {
+    this.clinics = clinics;
   }
 
 }

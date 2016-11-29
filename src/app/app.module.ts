@@ -6,8 +6,8 @@ import {FormsModule} from '@angular/forms';
 import {MaterialModule} from '@angular/material';
 import {AppComponent} from './app.component';
 import {routing} from './app.routing';
-import {AboutComponent, HomeComponent, HomeSearchComponent} from './pages/_index';
-import {ClinicCardComponent, HeaderComponent} from './components/_index';
+import {RegisterComponent, HomeComponent} from './pages/_index';
+import {HomeSearchComponent, ClinicCardComponent, HeaderComponent} from './components/_index';
 import {ApiService, ObservableService} from './shared/_index';
 import {removeNgStyles, createNewHosts} from '@angularclass/hmr';
 
@@ -22,7 +22,7 @@ import {removeNgStyles, createNewHosts} from '@angularclass/hmr';
   ],
   declarations: [
     AppComponent,
-    AboutComponent,
+    RegisterComponent,
     HomeComponent,
     HomeSearchComponent,
     ClinicCardComponent,

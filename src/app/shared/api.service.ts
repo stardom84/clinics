@@ -1,20 +1,11 @@
 import {Injectable} from '@angular/core';
-import 'rxjs/add/observable/throw';
-import 'rxjs/add/observable/fromEvent';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/map';
 import * as AWS from 'aws-sdk';
 import {DocumentClient} from 'aws-sdk/lib/dynamodb/document_client';
 import {AttributeMap, ScanOutput} from 'aws-sdk/lib/dynamodb/document_client_interfaces';
+import {AWSError} from 'aws-sdk/lib/error';
 
-/*let firebaseConfig = {
- apiKey: 'AIzaSyBb5BAKWzefQHM65bn-2iUohqJvyXC347s',
- authDomain: 'clinics-45581.firebaseapp.com',
- databaseURL: 'https://clinics-45581.firebaseio.com',
- storageBucket: 'clinics-45581.appspot.com',
- messagingSenderId: '252734030713'
- };*/
 
+// FIXME: don't use hard coded credentials
 let dynamoDBConf = {
   region: 'ap-southeast-1',
   credentials: {
@@ -33,15 +24,26 @@ export class ApiService {
   }
 
 
-  extractAWSOutput(data: ScanOutput): any {
+  parseAWSOutput(res: [AWSError, ScanOutput]): any {
+    let err: AWSError = res[0],
+      data: ScanOutput = res[1],
+      result: AttributeMap[] = [];
 
-    let result: AttributeMap[] = [];
+    if (err) {
+      console.log(err);
+      console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2), err);
+      return null;
+    } else {
 
-    data.Items.forEach(function (item) {
-      result.push(item);
-    });
+      console.log('GetItem succeeded:', data);
 
-    return result;
+      data.Items.forEach(function (item) {
+        console.log('item', item);
+        result.push(item);
+      });
+
+      return result;
+    }
   }
 
   private init(): void {

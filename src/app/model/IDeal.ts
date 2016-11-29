@@ -1,5 +1,5 @@
 declare namespace model {
-  interface IDeal extends IDealDTO {
+  interface IClinic extends IDealDTO {
     id: string;
     clinicId: string;
     title: string;

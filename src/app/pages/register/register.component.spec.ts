@@ -1,13 +1,13 @@
 import {TestBed} from '@angular/core/testing';
-import {AboutComponent} from './about.component';
+import {RegisterComponent} from './register.component';
 
 describe('About Component', () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({declarations: [AboutComponent]});
+    TestBed.configureTestingModule({declarations: [RegisterComponent]});
   });
 
   it('should ...', () => {
-    const fixture = TestBed.createComponent(AboutComponent);
+    const fixture = TestBed.createComponent(RegisterComponent);
     fixture.detectChanges();
     expect(fixture.nativeElement.children[0].textContent).toContain('About Works!');
   });

@@ -1,6 +1,6 @@
 declare namespace model {
   interface BaseModel {
-    createdAt: Date;
-    modifiedAt: Date;
+    createdAt?: Date;
+    modifiedAt?: Date;
   }
 }

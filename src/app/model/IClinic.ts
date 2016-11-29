@@ -4,6 +4,8 @@ declare namespace model {
     code: string;
     name: string;
     location: string;
+    rating?: number;
+    specialities?: ISpecialty[];
   }
 }
 
