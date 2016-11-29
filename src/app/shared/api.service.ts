@@ -5,7 +5,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
 import * as AWS from 'aws-sdk';
 import {DocumentClient} from 'aws-sdk/lib/dynamodb/document_client';
-import {AttributeMap} from 'aws-sdk/lib/dynamodb/document_client_interfaces';
+import {AttributeMap, ScanOutput} from 'aws-sdk/lib/dynamodb/document_client_interfaces';
 
 /*let firebaseConfig = {
  apiKey: 'AIzaSyBb5BAKWzefQHM65bn-2iUohqJvyXC347s',
@@ -33,7 +33,7 @@ export class ApiService {
   }
 
 
-  extractAWSOutput(data: DynamoDB.Types.ScanOutput): any {
+  extractAWSOutput(data: ScanOutput): any {
 
     let result: AttributeMap[] = [];
 

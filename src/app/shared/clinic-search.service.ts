@@ -28,7 +28,7 @@ export class ClinicSearchService {
     this.searchOb = Observable.bindCallback(this.Api.database.scan);
   }
 
-  private onSearch(err: AWSError, data: DynamoDB.Types.ScanOutput) {
+  private onSearch(err: AWSError, data: ScanOutput) {
     if (err) {
       console.error('Unable to scan the table. Error JSON:', JSON.stringify(err, null, 2));
     } else {
