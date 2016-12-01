@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 import {ApiService} from './_index';
 import {AWSError} from 'aws-sdk/lib/error';
-import {ScanInput, ScanOutput} from 'aws-sdk/lib/dynamodb/document_client_interfaces';
+import {ScanInput, ScanOutput, AttributeMap} from 'aws-sdk/lib/dynamodb/document_client_interfaces';
 
 
 @Injectable()
@@ -18,7 +18,7 @@ export class ClinicSearchService {
     });
   }
 
-  search(term: string | number) {
+  search(term: string | number): Observable<AttributeMap[]> {
     console.log('term', term);
     return this.searchOb(this.createParam(term))
                .map((res: [AWSError, ScanOutput]) => this.onSearch(res));

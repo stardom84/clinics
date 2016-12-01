@@ -9,7 +9,7 @@ export class GoogleMapService {
 
   constructor() {}
 
-  public getApi(): Observable<any> {
+  public getApi(language = 'en'): Observable<any> {
     if (this.api) {
       return Observable.of<any>(this.api);
     }
@@ -17,8 +17,10 @@ export class GoogleMapService {
     const callbackName = '__googleMapsApiOnLoadCallback';
     const subject = new AsyncSubject();
     const params = [`callback=${callbackName}`];
-    params.push(`key=${this.apiKey}`);
     const scriptElement = document.createElement('script');
+
+    params.push(`key=${this.apiKey}`);
+    if (language) { params.push(`language=${language}`); }
 
     scriptElement.src = `https://maps.googleapis.com/maps/api/js?${params.join('&')}`;
 
