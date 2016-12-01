@@ -3,7 +3,6 @@ import * as AWS from 'aws-sdk';
 import {DocumentClient} from 'aws-sdk/lib/dynamodb/document_client';
 import {AttributeMap, ScanOutput} from 'aws-sdk/lib/dynamodb/document_client_interfaces';
 import {AWSError} from 'aws-sdk/lib/error';
-import {Http} from '@angular/http';
 
 
 // FIXME: don't use hard coded credentials
@@ -19,9 +18,8 @@ let dynamoDBConf = {
 export class ApiService {
 
   public database: DocumentClient;
-  public Google: model.IGoogleApi;
 
-  constructor(private http: Http) {
+  constructor() {
     this.init();
   }
 
@@ -50,19 +48,10 @@ export class ApiService {
 
   private init(): void {
     this.initDb();
-    this.initGoogleApi();
   }
 
   private initDb(): void {
     AWS.config.update(dynamoDBConf);
     this.database = new AWS.DynamoDB.DocumentClient();
-  }
-
-  private initGoogleApi(): void {
-    this.Google = {
-      maps: {
-        getApi: () => this.http.get('http://maps.google.com/maps/api/js')
-      }
-    };
   }
 }

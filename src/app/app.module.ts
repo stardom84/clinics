@@ -8,7 +8,7 @@ import {AppComponent} from './app.component';
 import {routing} from './app.routing';
 import {RegisterComponent, HomeComponent} from './pages/_index';
 import {HomeSearchComponent, ClinicCardComponent, HeaderComponent} from './components/_index';
-import {ApiService, ObservableService} from './shared/_index';
+import {ApiService, GoogleMapService} from './shared/_index';
 import {removeNgStyles, createNewHosts} from '@angularclass/hmr';
 
 
@@ -30,7 +30,7 @@ import {removeNgStyles, createNewHosts} from '@angularclass/hmr';
   ],
   providers: [
     ApiService,
-    ObservableService
+    GoogleMapService
   ],
   bootstrap: [AppComponent]
 })

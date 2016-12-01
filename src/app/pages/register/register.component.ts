@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from '../../shared/api.service';
+import {GoogleMapService} from '../../shared/google.map.service';
 
 @Component({
   selector: 'my-register',
@@ -10,18 +10,26 @@ import {ApiService} from '../../shared/api.service';
 export class RegisterComponent implements OnInit {
 
   constructor(
-    private api: ApiService
+    private googleMapSrv: GoogleMapService
   ) {
     // Do stuff
   }
 
   ngOnInit() {
     console.log('Hello register');
-    this.api.Google.maps.getApi().subscribe(
-      google => {
-        console.log('google', google);
-        google.maps.Map(document.getElementById('map'));
+    this.googleMapSrv.getApi().subscribe((googleMaps) => {
+        console.log('googleMaps', googleMaps);
+        const maps = new googleMaps.Map(document.getElementById('map'), {
+          zoom: 12,
+          center: new googleMaps.LatLng(37.49736948554443, 127.02452659606933),
+          mapTypeId: googleMaps.MapTypeId.ROADMAP
+        });
+      },
+      (err) => {
+        console.log('err!!', err);
+      },
+      () => {
+        console.log('completed');
       }
-    );
   }
 }
