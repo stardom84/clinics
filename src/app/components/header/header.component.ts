@@ -11,6 +11,6 @@ export class HeaderComponent implements OnInit {
   @Input() private sidenav;
 
   ngOnInit() {
-    console.log('Home Search');
+    console.log(`Home Search`);
   }
 }

@@ -1,5 +1,4 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {ApiService} from './shared/_index';
 import '../style/app.scss';
 
 @Component({
@@ -9,9 +8,8 @@ import '../style/app.scss';
   encapsulation: ViewEncapsulation.None
 })
 export class AppComponent {
-  url = 'https://github.com/preboot/angular2-webpack';
 
-  constructor(private api: ApiService) {
+  constructor() {
     // Do something with api
   }
 }

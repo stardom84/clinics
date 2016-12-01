@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import {ApiService} from '../../shared/_index';
 import {Observable} from 'rxjs/Observable';
 
 @Component({
@@ -11,7 +10,7 @@ export class HomeComponent implements OnInit {
 
   private clinics: Observable<model.IClinic[]>;
 
-  constructor(private api: ApiService) {
+  constructor() {
     // Do stuff
   }
 
