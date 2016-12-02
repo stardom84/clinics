@@ -20,6 +20,5 @@ export class RegisterComponent implements OnInit {
     this.googleMapSrv.createMap(document.getElementById('map'), {lat: 37.49736948554443, lng: 127.02452659606933});
 
     this.googleMapSrv.getGeocodeByClickOb()
-        .subscribe((mouseEvent: google.maps.MouseEvent) => { console.log(mouseEvent); });
   }
 }

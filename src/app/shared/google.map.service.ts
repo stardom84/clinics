@@ -6,12 +6,14 @@ export class GoogleMapService {
 
   private api: any;
   private googleMaps: any;
+  private mapElement: HTMLElement;
   private apiKey = 'AIzaSyCTrSHR8nxKobRiroiMR65kFUhWx6SzYd0';
   private map: google.maps.Map;
 
   constructor() {}
 
   createMap(mapEl: HTMLElement, latLng: google.maps.LatLngLiteral) {
+    this.mapElement = mapEl;
     this.getApi().subscribe(
       googleMaps => {
         this.googleMaps = googleMaps;
@@ -20,13 +22,12 @@ export class GoogleMapService {
           center: new googleMaps.LatLng(latLng.lat, latLng.lng),
           mapTypeId: googleMaps.MapTypeId.ROADMAP
         });
-        this.addEventListenerOnMap();
       },
       err => { console.log('err!!', err); },
       () => { console.log('completed'); });
   }
 
-  getGeocodeByClickOb(): Observable<google.maps.MouseEvent> {
+  getGeocodeByClickOb(): (map: any, event: string) => Observable<google.maps.MouseEvent> {
     return this.registerClickToGetGeocode();
   }
 
@@ -62,11 +63,17 @@ export class GoogleMapService {
     return subject;
   }
 
-  private registerClickToGetGeocode(): Observable<google.maps.MouseEvent> {
-    const onClickMapOb = Observable.bindCallback((map: any, event: string, cb: () => any) => {
-      this.googleMaps.event.addListener(map, event, cb);
+  private registerClickToGetGeocode(): (map: any, event: string) => Observable<google.maps.MouseEvent> {
+    const onClickMapOb = Observable.bindCallback((event: string, cb: () => any) => {
+      this.googleMaps.event.addListener(this.map, event, cb);
     });
 
-    return onClickMapOb(this.map, 'click');
+    let eventLike = (event: string) => onClickMapOb(event);
+
+    Observable.fromEvent(eventLike, 'click').subscribe(mouseEvent => {
+      console.log(mouseEvent);
+    });
+
+    return onClickMapOb;
   }
 }
