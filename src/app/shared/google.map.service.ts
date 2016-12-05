@@ -1,34 +1,67 @@
-import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
-import {AsyncSubject} from 'rxjs/AsyncSubject';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+import { Subject } from 'rxjs/Subject';
+import { AsyncSubject } from 'rxjs/AsyncSubject';
 @Injectable()
 export class GoogleMapService {
 
   private api: any;
-  private googleMaps: any;
   private mapElement: HTMLElement;
   private apiKey = 'AIzaSyCTrSHR8nxKobRiroiMR65kFUhWx6SzYd0';
   private map: google.maps.Map;
+  private userCoords: Position;
+  private clickMapStream: Observable<Event>;
+  private mapBindCallback: (event: string) => Observable<google.maps.MouseEvent>;
+  private mapCallbackStream: Observable<google.maps.MouseEvent>;
 
-  constructor() {}
-
-  createMap(mapEl: HTMLElement, latLng: google.maps.LatLngLiteral) {
-    this.mapElement = mapEl;
-    this.getApi().subscribe(
-      googleMaps => {
-        this.googleMaps = googleMaps;
-        this.map = new googleMaps.Map(mapEl, {
-          zoom: 12,
-          center: new googleMaps.LatLng(latLng.lat, latLng.lng),
-          mapTypeId: googleMaps.MapTypeId.ROADMAP
-        });
-      },
-      err => { console.log('err!!', err); },
-      () => { console.log('completed'); });
+  constructor() {
   }
 
-  getGeocodeByClickOb(): (map: any, event: string) => Observable<google.maps.MouseEvent> {
-    return this.registerClickToGetGeocode();
+  createMap(mapEl: HTMLElement, language?: string) {
+    this.mapElement = mapEl;
+
+    this.getMyLocation()
+        .mergeMap((position: Position) => this.getApi(language).map(() => position))
+        .subscribe(
+          position => {
+            this.map = new this.api.Map(mapEl, {
+              zoom: 12,
+              center: new this.api.LatLng(position.coords.latitude, position.coords.longitude),
+              mapTypeId: this.api.MapTypeId.ROADMAP
+            });
+          },
+          err => {
+            console.log('err!!', err);
+          },
+          () => {
+            console.log('completed');
+          });
+
+
+    return this;
+  }
+
+  getGeocodeByClickOb(): Observable<google.maps.MouseEvent> {
+    this.setMapClickStream()
+        .setMapCallback()
+        .bindMapClickToCallback();
+
+    return this.mapCallbackStream;
+  }
+
+  getMyLocation(): Observable<Position> {
+    const subscription = new Subject();
+    const bindCallback = Observable.bindCallback((success: () => any) => {
+      navigator.geolocation.getCurrentPosition(success);
+    });
+
+    bindCallback()
+      .subscribe((position: Position) => {
+        this.userCoords = position;
+        subscription.next(position);
+      });
+
+    return subscription;
   }
 
   private getApi(language = 'en'): Observable<any> {
@@ -38,7 +71,7 @@ export class GoogleMapService {
 
     const callbackName  = '__googleMapsApiOnLoadCallback',
           params        = [],
-          subject       = new AsyncSubject(),
+          subscription = new AsyncSubject(),
           scriptElement = document.createElement('script');
 
     params.push(`callback=${callbackName}`);
@@ -50,30 +83,35 @@ export class GoogleMapService {
     window[callbackName] = () => {
       console.log('Calling __googleMapsApiOnLoadCallback...');
 
-      subject.next(window.google.maps);
-      subject.complete();
+      this.api = window['google'].maps;
 
-      this.api = window.google.maps;
+      subscription.next(true);
+      subscription.complete();
 
       delete window[callbackName];
     };
 
     document.body.appendChild(scriptElement);
 
-    return subject;
+    return subscription;
   }
 
-  private registerClickToGetGeocode(): (map: any, event: string) => Observable<google.maps.MouseEvent> {
-    const onClickMapOb = Observable.bindCallback((event: string, cb: () => any) => {
-      this.googleMaps.event.addListener(this.map, event, cb);
+  private setMapClickStream() {
+    this.clickMapStream = Observable.fromEvent(this.mapElement, 'click')
+                                    .map(e => e);
+    return this;
+  }
+
+  private setMapCallback() {
+    this.mapBindCallback = Observable.bindCallback((event: string, cb: () => any) => {
+      this.api.event.addListener(this.map, event, cb);
     });
 
-    let eventLike = (event: string) => onClickMapOb(event);
+    return this;
+  }
 
-    Observable.fromEvent(eventLike, 'click').subscribe(mouseEvent => {
-      console.log(mouseEvent);
-    });
-
-    return onClickMapOb;
+  private bindMapClickToCallback() {
+    this.mapCallbackStream = this.clickMapStream
+                                 .mergeMap(() => this.mapBindCallback('click'));
   }
 }
